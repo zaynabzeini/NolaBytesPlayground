@@ -71,19 +71,20 @@ document.addEventListener('DOMContentLoaded', function() { // listening for the 
     filteredRestaurants.forEach(restaurant => { // goes through the array of restaurants that meet the criteria and forEach restaurant
       const restaurantCard = document.createElement('div'); // creates a div element, assigning it to a variable called restaurant card
       restaurantCard.classList.add('restaurant-card'); // adds the class restaurant-card to that div element
-      restaurantCard.addEventListener('click', function() {
-        handleRestaurantSelect(restaurant.id);
+      restaurantCard.addEventListener('click', function() { // adds an event handler for restaurant card, where if it's clicked it will...
+        handleRestaurantSelect(restaurant.id); // pass the restauraunt's id into the handleRestaurantSelect function, setting selectedRestaurant variable to be this restaurant's id
       });
-      if (selectedRestaurant === restaurant.id) { 
-        restaurantCard.classList.add('selected');
+      if (selectedRestaurant === restaurant.id) { // checks to see if the card has been selected 
+        restaurantCard.classList.add('selected'); // if it has, it adds the "selected" part of the class (check out the css!)
       }
-      restaurantCard.innerHTML = `
+      // sets up the HTML content of the restaurant card div element
+      restaurantCard.innerHTML = ` 
         <h2>${restaurant.name}</h2>
         <p><strong>Address:</strong> ${restaurant.address}</p>
         <p><strong>Hours:</strong> ${restaurant.hours}</p>
         <p><strong>Type:</strong> ${restaurant.type}</p>
       `;
-      restaurantList.appendChild(restaurantCard);
+      restaurantList.appendChild(restaurantCard); // adds the restaurant card as a child of the restaurant list, the div element
     });
   }
 
