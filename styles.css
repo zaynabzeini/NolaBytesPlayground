@@ -1,0 +1,74 @@
+.search-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+  width: 90%;
+  margin: 10px;
+}
+
+input {
+  width: 100%;
+  height: 20px;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.content-container {
+  display: flex;
+  width: 90%;
+  height: calc(100vh - 150px); /* Adjust height as needed */
+  padding: 10px;
+}
+
+.restaurant-list {
+  width: 50%;
+  overflow-y: auto; /* Enable vertical scroll */
+  border: 1px solid #ccc;
+}
+
+.restaurant-card {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.restaurant-card.selected {
+  background-color: #f0f0f0;
+}
+
+.details-container {
+  width: 50%;
+  overflow-y: auto; /* Enable vertical scroll */
+  border: 1px solid #ccc;
+}
+
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab-buttons button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px; /* Larger padding for bigger tabs */
+  margin-right: 20px; /* Increased spacing between tabs */
+  font-size: 20px; /* Larger font size for tabs */
+}
+
+.tab-buttons button.selected {
+  background-color: #ccc; /* Different color for selected tab */
+}
+
+.tab-content {
+  padding: 20px; /* Increased padding for tab content */
+  border: 1px solid #ccc;
+}
