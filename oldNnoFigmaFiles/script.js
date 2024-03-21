@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() { // listening for the 
   const detailsContainer = document.getElementById('detailsContainer'); // the element in the document with the id "detailsContainer" aka the div for details
   let searchQuery = ''; // variable for the searchQuery (what the user is going to search for)
   let selectedRestaurant = null; // variable for the selected restaurant (which restaurant the user clicks on to see more details about)
-  let selectedTab = ''; // variable for the selected tab (which tab, between menu and reviews, that the user clicks on)
   let filteredRestaurants = []; // variable for the filtered restaurants (list of returned restaurants that fit the user's search query)
 
   const restaurantsData = [ // temporary data until backend database is connected
@@ -92,57 +91,31 @@ document.addEventListener('DOMContentLoaded', function() { // listening for the 
   function renderDetailsContainer() { 
     detailsContainer.innerHTML = ''; // clears the innerHTML property (the HTML markup of the div element), resetting it
     if (selectedRestaurant) { // if the selectedRestaurant variable is truthy (aka not empty/false/0), which it will be once a restauraunt is selected
-      const tabButtons = document.createElement('div'); // creates a div element, assigning it to a variable called tabButtons
-      tabButtons.classList.add('tab-buttons'); // adds the class tab-buttons to that div element
       
-      const menuButton = document.createElement('button'); // creates a button element, assigning it to a variable called menuButton
-      menuButton.textContent = 'Menu'; // assigning the button's textContent (text property) as Menu
-      menuButton.addEventListener('click', function() { // listens for an event (clicking) to run this function 
-        handleTabChange('menu'); // calls handleTabChange function, setting the tab to menu
-      });
-      menuButton.classList.toggle('selected', selectedTab === 'menu'); // adds a class (called "selected") that gets toggled when selectedTab has the value of menu
-      
-      const reviewsButton = document.createElement('button'); // creates a button element, assigning it to a variable called reviewsButton
+      const reviewsButton = document.createElement('div'); // creates a button element, assigning it to a variable called reviewsButton
       reviewsButton.textContent = 'Reviews'; // assigning the button's textContent (text property) as Reviews
-      reviewsButton.classList.toggle('selected', selectedTab === 'reviews'); // adds a class (called "selected") that gets toggled when selectedTab has the value of reviews
-      reviewsButton.addEventListener('click', function() { // listens for an event (clicking) to run this function 
-        handleTabChange('reviews'); // calls handleTabChange function, setting the tab to reviews
-      });
-      
-      tabButtons.appendChild(menuButton); // adds the menuButton button to be a child of the tabButtons div
-      tabButtons.appendChild(reviewsButton); // adds the reviewsButton button to be a child of the tabButtons div
-      detailsContainer.appendChild(tabButtons); // adds the tabButtons div to be a child of the detailsContainer div
+      reviewsButton.classList.toggle('selected'); // adds a class (called "selected") that gets toggled when selectedTab has the value of reviews      
+      detailsContainer.appendChild(reviewsButton); // adds the tabButtons div to be a child of the detailsContainer div
       
       const tabContent = document.createElement('div'); // creates a div element, assigning it to a variable named tabContent
       tabContent.classList.add('tab-content');  // adds the class tab-content to that div element
-      if (selectedTab === 'menu') { // if the selectedTab is menu
-        const menuHeader = document.createElement('h2'); // create an h2 element, assigning it to variable menuHeader
-        menuHeader.textContent = 'Menu'; // assigning the h2's's textContent (text property) as Menu
-        const menuList = document.createElement('ul'); // create an unordered list element, assigning it to variable menuList
-        filteredRestaurants.find(restaurant => restaurant.id === selectedRestaurant).menu.forEach(item => { // iterating through the fitleredRestaurants array to find the element/restaurant whose id property matches that of the selectedRestaurant variable, then accessing that restauraunt's menu property and iterating through each item in that menu property
-          const menuItem = document.createElement('li'); // for each item in the selected restaurant's menu, it creates a list item element, assinging it to variable menuItem
-          menuItem.textContent = item; // assigning the li's's textContent (text property) as item (the value held in the menu's item)
-          menuList.appendChild(menuItem); // adds the menuItem element to be a child of the menuList ul
-        });
-        tabContent.appendChild(menuHeader); // adds the menuHeader element to be a child of the tabContent div
-        tabContent.appendChild(menuList); // adds the menuList element to be a child of the tabContent div
-      } else if (selectedTab === 'reviews') { // if the selectedTab is reviews
-        const reviewsHeader = document.createElement('h2'); // create an h2 element, assigning it to variable reviewsHeader
-        reviewsHeader.textContent = 'Reviews'; // assigning the h2's's textContent (text property) as Reviews
-        const reviewsList = document.createElement('ul'); // create an unordered list element, assigning it to variable reviewsList
-        filteredRestaurants.find(restaurant => restaurant.id === selectedRestaurant).reviews.forEach(review => { // iterating through the fitleredRestaurants array to find the element/restaurant whose id property matches that of the selectedRestaurant variable, then accessing that restauraunt's reviews property and iterating through each review in that review property
-          const reviewItem = document.createElement('li');  // for each review in the selected restaurant's reviews, it creates a list item element, assinging it to variable reviewItem
-          // sets up the HTML content of the reviewItem li element
-          reviewItem.innerHTML = `
-            <p><strong>${review.user}</strong></p>
-            <p>Rating: ${review.rating}</p>
-            <p>Comment: ${review.comment}</p>
-          `;
-          reviewsList.appendChild(reviewItem); // adds the reviewItem element to be a child of the reviewsList ul
-        });
-        tabContent.appendChild(reviewsHeader); // adds the reviewsHeader element to be a child of the tabContent div
-        tabContent.appendChild(reviewsList); // adds the reviewsList element to be a child of the tabContent div
-      }
+      
+      const reviewsHeader = document.createElement('h2'); // create an h2 element, assigning it to variable reviewsHeader
+      reviewsHeader.textContent = 'Reviews'; // assigning the h2's's textContent (text property) as Reviews
+      const reviewsList = document.createElement('ul'); // create an unordered list element, assigning it to variable reviewsList
+      filteredRestaurants.find(restaurant => restaurant.id === selectedRestaurant).reviews.forEach(review => { // iterating through the fitleredRestaurants array to find the element/restaurant whose id property matches that of the selectedRestaurant variable, then accessing that restauraunt's reviews property and iterating through each review in that review property
+        const reviewItem = document.createElement('li');  // for each review in the selected restaurant's reviews, it creates a list item element, assinging it to variable reviewItem
+        // sets up the HTML content of the reviewItem li element
+        reviewItem.innerHTML = `
+          <p><strong>${review.user}</strong></p>
+          <p>Rating: ${review.rating}</p>
+          <p>Comment: ${review.comment}</p>
+        `;
+        reviewsList.appendChild(reviewItem); // adds the reviewItem element to be a child of the reviewsList ul
+      });
+      tabContent.appendChild(reviewsHeader); // adds the reviewsHeader element to be a child of the tabContent div
+      tabContent.appendChild(reviewsList); // adds the reviewsList element to be a child of the tabContent div
+      
       detailsContainer.appendChild(tabContent); // adds the tabContent div to be a child of the detailsContainer div
     }
   }
